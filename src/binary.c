@@ -17,11 +17,20 @@ char* days_of_week[7] = {"Sun,", "Mon,", "Tues,", "Wed,", "Thu,", "Fri,", "Sat,"
 char* months_of_year[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
 void update_proc(Layer *layer, GContext *ctx) {
+    bool h24 = clock_is_24h_style()
     graphics_context_set_stroke_color(ctx, GColorWhite);
     graphics_context_set_fill_color(ctx, GColorWhite);
     int i = 0;
-    for(i = 0; i < 4; i++)
-        graphics_draw_circle(ctx, GPoint(23+33*i, 37), RADIUS);
+    if(h24)
+    {
+        for(i = 0; i < 5; i++)
+            graphics_draw_circle(ctx, GPoint(18+27*i, RADIUS);
+    }
+    else
+    {
+        for(i = 0; i < 4; i++)
+            graphics_draw_circle(ctx, GPoint(23+33*i, 37), RADIUS);
+    }
     for(i = 0; i < 6; i++)
         graphics_draw_circle(ctx, GPoint(13+23*i, 84), RADIUS);
     for(i = 0; i < 6; i++)
@@ -29,15 +38,25 @@ void update_proc(Layer *layer, GContext *ctx) {
     time_t time_value = time(NULL);
     struct tm* mTime = localtime(&time_value);
     unsigned int hour = mTime->tm_hour;
-    if(hour == 0)
-        hour = 12;
-    else if(hour != 12)
-        hour = hour % 12;
-    for(i = 0; i < 4; i++)
+    if(h24)
+        for i = 0; - < 5; i++)
+        {
+            if(hour % 2)
+                graphics_fill_circle(ctx, GPoint(126-27*i, 37), RADIUS);
+            hour /= 2;
+        }
+    else:
     {
-        if(hour % 2)
-            graphics_fill_circle(ctx, GPoint(122-33*i, 37), RADIUS);
-        hour /= 2;
+        if(hour == 0)
+            hour = 12;
+        else if(hour != 12)
+            hour = hour % 12;
+        for(i = 0; i < 4; i++)
+        {
+            if(hour % 2)
+                graphics_fill_circle(ctx, GPoint(122-33*i, 37), RADIUS);
+            hour /= 2;
+        }
     }
     unsigned int min = mTime->tm_min;
     for(i = 0; i < 6; i++)
